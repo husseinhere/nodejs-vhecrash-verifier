@@ -1,15 +1,15 @@
 // change these
 let gameHash =
-  '0f725029f430ee204ffa4d2e3f5ef96f92dcf242e96a1d1df36e8e61644693b0';
+  'e2fa150d1180331b26907a0f8d6bd40e25d72f7cd2d552c54abd4066ff415b7c';
 let gameId = 9;
 let commitment =
-  '3dcd638f4fe4db33315e08007153b6ae0c80681fa366d551d651e3dda3dad49e';
+  'f94680994daea63b619d2540092bd993f8c78a482437cc71a4af8532e6618c2f';
 
 let displayGames = 3; // Only show the first ...
 
 // fixed per appp
 let vx_pubkey =
-  '82bb9e128159fa868f8115e630440ce13dafa352b9f04c8ec48a4df3ad30d819554a7cc8a2e2431ab7fd151c8542948f';
+  'b110a624b88aea50b1dbd643d8beb994adef852c7259e7ca2b69c1fa3c82f7a65b4a40d93c539e93ac785d1427f59cb2';
 const appSlug = 'demo';
 
 /////////////////////////////
@@ -112,17 +112,14 @@ query AppsMessagesByIndex($appSlug: String!, $index: Int!, $commitment: String!)
     commitment: bytesToHex(commitment),
   };
 
-  const response = await fetch(
-    'https://ph-server-hrrfydcqhq-uw.a.run.app/graphql',
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query,
-        variables,
-      }),
-    }
-  );
+  const response = await fetch('https://server.provablyhonest.com/graphql', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query,
+      variables,
+    }),
+  });
 
   if (response.status !== 200) {
     console.error(

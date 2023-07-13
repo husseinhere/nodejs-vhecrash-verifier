@@ -1,16 +1,19 @@
 // change these
-let gameHash =
-  'e2fa150d1180331b26907a0f8d6bd40e25d72f7cd2d552c54abd4066ff415b7c';
+
 let gameId = 9;
 let commitment =
-  'f94680994daea63b619d2540092bd993f8c78a482437cc71a4af8532e6618c2f';
+  '7e1e82afece57007e7af6b38ab355b3716eddcedc951cd79bd878e2b36004af7';
+let gameHash =
+  '5b7b9340b280cfa5cfba7138187413898f09831102d4953f1c7455796578dc81';
 
 let displayGames = 3; // Only show the first ...
 
 // fixed per appp
 let vx_pubkey =
-  'b110a624b88aea50b1dbd643d8beb994adef852c7259e7ca2b69c1fa3c82f7a65b4a40d93c539e93ac785d1427f59cb2';
+  '841806a521b86e8def63c56607caa123d4768c98d677fe3645362a1bfc3ba9136c2d60388699ba7e900a96d38cc4f4a6';
 const appSlug = 'demo';
+
+const clientSeed = 'chicken';
 
 /////////////////////////////
 // the logic...
@@ -19,7 +22,12 @@ const appSlug = 'demo';
 const { sha256 } = require('@noble/hashes/sha256');
 const { hmac } = require('@noble/hashes/hmac');
 
-const { bytesToHex, hexToBytes } = require('@noble/hashes/utils');
+const {
+  bytesToHex,
+  hexToBytes,
+  concatBytes,
+  utf8ToBytes,
+} = require('@noble/hashes/utils');
 const bls = require('@noble/curves/bls12-381').bls12_381;
 const fetch = require('node-fetch');
 
@@ -34,7 +42,7 @@ async function run() {
     gameHash = sha256(gameHash);
 
     if (displayGames-- > 0) {
-      const message = gameHash;
+      const message = concatBytes(gameHash, utf8ToBytes(clientSeed));
       await displayGameOutput(currentGameHash, message, gameId);
     } else if (!showedSkipMessage) {
       showedSkipMessage = true;
